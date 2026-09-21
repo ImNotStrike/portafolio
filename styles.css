@@ -622,14 +622,42 @@ button {
 .skill-icon {
     display: grid;
     place-items: center;
-    width: 56px;
-    height: 56px;
+    width: 66px;
+    height: 66px;
     margin-top: 22px;
     border: 1px solid rgba(120, 160, 240, 0.17);
-    border-radius: 15px;
-    background: rgba(76, 117, 218, 0.11);
+    border-radius: 18px;
+    background: linear-gradient(145deg, rgba(54, 91, 159, 0.14), rgba(36, 56, 105, 0.08));
     color: #8bb7ff;
-    font: 700 0.76rem/1 "Space Grotesk", sans-serif;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 12px 28px rgba(0,0,0,0.12);
+    transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.skill-icon i {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+/* Icono claro de Photoshop para mantener contraste sobre el fondo oscuro. */
+.photoshop-icon {
+    padding: 7px;
+}
+
+.photoshop-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 6px 14px rgba(29, 140, 255, 0.25));
+}
+
+.skill-card:hover .skill-icon {
+    transform: translateY(-4px) scale(1.03);
+    border-color: rgba(99, 215, 255, 0.28);
+    background: linear-gradient(145deg, rgba(63, 104, 189, 0.18), rgba(64, 54, 132, 0.12));
+}
+
+.skill-card:hover .skill-icon i {
+    filter: drop-shadow(0 0 12px rgba(99, 215, 255, 0.18));
 }
 
 .skill-card h3 {
@@ -789,6 +817,26 @@ button {
 .visual-code {
     align-self: flex-end;
     color: #738caf;
+}
+
+.project-logo {
+    display: block;
+    width: 86px;
+    height: 86px;
+    margin-bottom: 18px;
+    object-fit: contain;
+    border-radius: 20px;
+    filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.25));
+}
+
+.project-logo-accelerant {
+    width: 94px;
+    height: 94px;
+}
+
+.project-logo-cedros {
+    width: 90px;
+    height: 90px;
 }
 
 .visual-content {
@@ -994,13 +1042,21 @@ button {
 .contact-icon {
     display: grid;
     place-items: center;
-    width: 39px;
-    height: 39px;
-    border-radius: 11px;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(129, 165, 235, 0.12);
+    border-radius: 12px;
     background: rgba(78, 121, 235, 0.12);
     color: #86afff;
-    font: 700 0.84rem/1 "Space Grotesk", sans-serif;
+    font-size: 1rem;
+    line-height: 1;
+    flex-shrink: 0;
 }
+
+.contact-icon-email { color: #75cfff; }
+.contact-icon-whatsapp { color: #5de1aa; }
+.contact-icon-github { color: #dce6f8; }
+.contact-icon i { font-size: 1rem; }
 
 .contact-item span:nth-child(2) {
     display: grid;
@@ -1283,40 +1339,4 @@ button {
         animation-iteration-count: 1 !important;
         transition-duration: 0.001ms !important;
     }
-}
-
-/* ==========================================================
-   LOGOS DE LOS PROYECTOS
-   ========================================================== */
-
-.project-logo {
-    display: block;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    object-position: center;
-    flex-shrink: 0;
-}
-
-/* Logo Accelerant: archivo original 1000x1000 */
-.project-logo-accelerant {
-    width: 120px;
-    height: 120px;
-    border-radius: 24px;
-}
-
-/* Logo Café Los Cedros: archivo original 500x500 */
-.project-logo-cedros {
-    width: 120px;
-    height: 120px;
-    border-radius: 24px;
-}
-
-/* Mantiene los elementos del proyecto ordenados */
-.project-visual .visual-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 8px;
 }
