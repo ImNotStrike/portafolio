@@ -58,7 +58,6 @@ function updateCafeProjectState() {
 
     if (SHOW_CAFE_PROJECT) {
         cafeStatus.textContent = "Publicado";
-
         cafeDescription.textContent =
             "Sitio web para presentar la historia, proceso, galería y contacto de un proyecto cafetero de Teruel, Huila.";
 
@@ -66,12 +65,10 @@ function updateCafeProjectState() {
         cafeLink.target = "_blank";
         cafeLink.rel = "noopener noreferrer";
         cafeLink.textContent = "Visitar proyecto ↗";
-
         cafeLink.classList.remove("project-link-disabled");
         cafeLink.removeAttribute("aria-disabled");
     } else {
         cafeStatus.textContent = "En proceso";
-
         cafeDescription.textContent =
             "Sitio web para presentar la historia, proceso, galería y contacto de un proyecto cafetero de Teruel, Huila. Actualmente se encuentra en proceso de publicación.";
 
@@ -79,7 +76,6 @@ function updateCafeProjectState() {
         cafeLink.removeAttribute("target");
         cafeLink.removeAttribute("rel");
         cafeLink.textContent = "En proceso de ser publicada •";
-
         cafeLink.classList.add("project-link-disabled");
         cafeLink.setAttribute("aria-disabled", "true");
     }
@@ -100,7 +96,6 @@ if (cafeLink) {
    4. AÑO ACTUAL DEL FOOTER
 */
 const currentYear = document.getElementById("currentYear");
-
 if (currentYear) {
     currentYear.textContent = new Date().getFullYear();
 }
@@ -114,24 +109,15 @@ const mainMenu = document.getElementById("mainMenu");
 if (menuToggle && mainMenu) {
     menuToggle.addEventListener("click", () => {
         const isOpen = mainMenu.classList.toggle("open");
-
         menuToggle.classList.toggle("open", isOpen);
-
-        menuToggle.setAttribute(
-            "aria-expanded",
-            String(isOpen)
-        );
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
     });
 
     mainMenu.querySelectorAll("a").forEach((link) => {
         link.addEventListener("click", () => {
             mainMenu.classList.remove("open");
             menuToggle.classList.remove("open");
-
-            menuToggle.setAttribute(
-                "aria-expanded",
-                "false"
-            );
+            menuToggle.setAttribute("aria-expanded", "false");
         });
     });
 }
@@ -144,114 +130,71 @@ const scrollProgress = document.getElementById("scrollProgress");
 
 function updateScrollUI() {
     const scrollTop = window.scrollY;
-
-    const pageHeight =
-        document.documentElement.scrollHeight -
-        window.innerHeight;
+    const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
 
     if (header) {
-        header.classList.toggle(
-            "scrolled",
-            scrollTop > 20
-        );
+        header.classList.toggle("scrolled", scrollTop > 20);
     }
 
     if (scrollProgress) {
-        const progress =
-            pageHeight > 0
-                ? (scrollTop / pageHeight) * 100
-                : 0;
-
+        const progress = pageHeight > 0 ? (scrollTop / pageHeight) * 100 : 0;
         scrollProgress.style.width = `${progress}%`;
     }
 }
 
-window.addEventListener(
-    "scroll",
-    updateScrollUI,
-    { passive: true }
-);
-
+window.addEventListener("scroll", updateScrollUI, { passive: true });
 updateScrollUI();
 
 /* ----------------------------------------------------------
    7. REVEAL DE SECCIONES AL HACER SCROLL
 */
-const revealElements =
-    document.querySelectorAll(".reveal");
+const revealElements = document.querySelectorAll(".reveal");
 
 if ("IntersectionObserver" in window) {
-    const revealObserver =
-        new IntersectionObserver(
-            (entries, observer) => {
-                entries.forEach((entry) => {
-                    if (!entry.isIntersecting) return;
-
-                    entry.target.classList.add("visible");
-
-                    observer.unobserve(
-                        entry.target
-                    );
-                });
-            },
-            {
-                threshold: 0.12,
-                rootMargin:
-                    "0px 0px -40px 0px"
-            }
-        );
-
-    revealElements.forEach((element) =>
-        revealObserver.observe(element)
+    const revealObserver = new IntersectionObserver(
+        (entries, observer) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+            });
+        },
+        {
+            threshold: 0.12,
+            rootMargin: "0px 0px -40px 0px"
+        }
     );
+
+    revealElements.forEach((element) => revealObserver.observe(element));
 } else {
-    revealElements.forEach((element) =>
-        element.classList.add("visible")
-    );
+    revealElements.forEach((element) => element.classList.add("visible"));
 }
 
 /* ----------------------------------------------------------
    8. ENLACE ACTIVO DEL NAV SEGÚN LA SECCIÓN VISIBLE
 */
-const sections =
-    document.querySelectorAll(
-        "main section[id]"
-    );
+const sections = document.querySelectorAll("main section[id]");
+const navLinks = document.querySelectorAll(".nav-links a");
 
-const navLinks =
-    document.querySelectorAll(
-        ".nav-links a"
-    );
+if ("IntersectionObserver" in window && sections.length && navLinks.length) {
+    const sectionObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
 
-if (
-    "IntersectionObserver" in window &&
-    sections.length &&
-    navLinks.length
-) {
-    const sectionObserver =
-        new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (!entry.isIntersecting)
-                        return;
-
-                    navLinks.forEach((link) => {
-                        link.classList.toggle(
-                            "active",
-                            link.getAttribute("href") ===
-                                `#${entry.target.id}`
-                        );
-                    });
+                navLinks.forEach((link) => {
+                    link.classList.toggle(
+                        "active",
+                        link.getAttribute("href") === `#${entry.target.id}`
+                    );
                 });
-            },
-            {
-                rootMargin:
-                    "-35% 0px -55% 0px",
-                threshold: 0
-            }
-        );
-
-    sections.forEach((section) =>
-        sectionObserver.observe(section)
+            });
+        },
+        {
+            rootMargin: "-35% 0px -55% 0px",
+            threshold: 0
+        }
     );
+
+    sections.forEach((section) => sectionObserver.observe(section));
 }
